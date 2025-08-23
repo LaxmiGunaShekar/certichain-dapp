@@ -3,14 +3,10 @@ import { ethers } from 'ethers';
 import axios from 'axios';
 import './App.css';
 
-// --- Hardcoded Final ABI ---
 const finalABI = [
   "function owner() view returns (address)", "function isIssuer(address) view returns (bool)", "function addIssuer(address _newIssuer)", "function addDocument(string memory _ipfsHash, string memory _documentName)", "function verifyDocument(address _userAddress, uint256 _docIndex)", "function getDocumentCount(address _user) view returns (uint256)", "function getDocument(address _user, uint256 _index) view returns (string, string, address, bool)"
 ];
-// --- End Hardcoded ABI ---
-
-const contractAddress = "0x81298d0A12addC1D3E873169284F54C6dbA1F460";
-
+const contractAddress = "0x81298d0A12addC1D3E873169284F54C6dbA1F460"; // Your working contract address
 
 //============================================
 // LANDING PAGE COMPONENT
@@ -18,16 +14,31 @@ const contractAddress = "0x81298d0A12addC1D3E873169284F54C6dbA1F460";
 function LandingPage({ onLaunch }) {
   return (
     <div className="landing-page">
-      <h1>CertiChain</h1>
-      <p>"Where there is a chain there is Trust"</p>
-      <button className="launch-button" onClick={onLaunch}>Launch App</button>
-      <footer className="footer">
-        <p>© 2025 CertiChain. A Decentralized Identity Project.</p>
-      </footer>
+      <div className="hero-section">
+        <h1>CertiChain</h1>
+        <p className="quote">"Where there is a chain there is Trust"</p>
+        <button className="launch-button" onClick={onLaunch}>Launch dApp</button>
+      </div>
+      <div className="info-section">
+        <h2>Why CertiChain?</h2>
+        <div className="features-grid">
+          <div className="feature-card"><i className="fa-solid fa-cubes"></i><h3>Immutable & Tamper-Proof</h3><p>Leveraging blockchain technology, every credential is a permanent, unchangeable record, eliminating the possibility of fraud.</p></div>
+          <div className="feature-card"><i className="fa-solid fa-cloud-arrow-up"></i><h3>Decentralized & Always Available</h3><p>Files are stored on the IPFS network, ensuring they are always accessible, censorship-resistant, and not controlled by any single entity.</p></div>
+          <div className="feature-card"><i className="fa-solid fa-shield-halved"></i><h3>Instant & Trustworthy Verification</h3><p>Trusted institutions can verify credentials with a single, secure transaction, providing immediate and undeniable proof of authenticity for employers.</p></div>
+        </div>
+      </div>
+      <div className="info-section">
+        <h2>How It Works</h2>
+        <div className="how-it-works-grid">
+          <div className="step-card"><h3>1. Upload</h3><i className="fa-solid fa-arrow-up-from-bracket"></i><p>Connect your Web3 wallet and upload your credential. The file is secured on IPFS and a corresponding record is created on-chain.</p></div>
+          <div className="step-card"><h3>2. Verify</h3><i className="fa-solid fa-check-to-slot"></i><p>The original issuing institution verifies the document, creating a permanent, trustworthy link on the blockchain.</p></div>
+          <div className="step-card"><h3>3. Share</h3><i className="fa-solid fa-magnifying-glass"></i><p>Recruiters can instantly look up a user's wallet address and see a complete, trusted portfolio of their verified credentials.</p></div>
+        </div>
+      </div>
+      <footer className="footer"><p>© 2025 CertiChain. A Decentralized Identity Project.</p></footer>
     </div>
   );
 }
-
 
 //============================================
 // MAIN DAPP CONTAINER COMPONENT
@@ -48,12 +59,8 @@ function MainDApp() {
         const contractInstance = new ethers.Contract(contractAddress, finalABI, signer);
         setAccount(userAccount);
         setContract(contractInstance);
-      } catch (error) {
-        console.error("Error connecting wallet:", error);
-      }
-    } else {
-      alert("Please install MetaMask.");
-    }
+      } catch (error) { console.error("Error connecting wallet:", error); }
+    } else { alert("Please install MetaMask."); }
   };
 
   useEffect(() => {
@@ -71,15 +78,18 @@ function MainDApp() {
   }, [account, contract]);
 
   return (
-    <>
+    <div className="dapp-container">
       <nav className="navbar">
-        <button onClick={() => setView('user')}>My Profile</button>
-        <button onClick={() => setView('issuer')}>Issuer Dashboard</button>
-        <button onClick={() => setView('public')}>Public Verifier</button>
+        <button className={view === 'user' ? 'active' : ''} onClick={() => setView('user')}>My Profile</button>
+        <button className={view === 'issuer' ? 'active' : ''} onClick={() => setView('issuer')}>Issuer Dashboard</button>
+        <button className={view === 'public' ? 'active' : ''} onClick={() => setView('public')}>Public Verifier</button>
       </nav>
-      
       {!account ? (
-        <button onClick={connectWallet} style={{maxWidth: '300px', margin: 'auto'}}>Connect Wallet</button>
+        <div className="connect-wallet-container">
+          <h3 className="dashboard-title">Welcome to CertiChain</h3>
+          <p className="dashboard-description">Please connect your MetaMask wallet to manage your documents or access issuer tools. This is your secure entry point to the world of decentralized identity.</p>
+          <button onClick={connectWallet}>Connect Wallet</button>
+        </div>
       ) : (
         <div>
           <p>Connected: {account.substring(0, 6)}...{account.substring(account.length - 4)}</p>
@@ -88,30 +98,23 @@ function MainDApp() {
           {view === 'public' && <PublicVerifier contract={contract} />}
         </div>
       )}
-    </>
+    </div>
   );
 }
-
 
 //============================================
 // APP WRAPPER COMPONENT
 //============================================
 function App() {
   const [appLaunched, setAppLaunched] = useState(false);
-
   return (
     <div className="App">
       <header className="App-header">
-        {!appLaunched ? (
-          <LandingPage onLaunch={() => setAppLaunched(true)} />
-        ) : (
-          <MainDApp />
-        )}
+        {!appLaunched ? (<LandingPage onLaunch={() => setAppLaunched(true)} />) : (<MainDApp />)}
       </header>
     </div>
   );
 }
-
 
 //============================================
 // USER DASHBOARD COMPONENT
@@ -133,11 +136,7 @@ function UserDashboard({ contract, account }) {
           docs.push({ ipfsHash: docData[0], documentName: docData[1], issuer: docData[2], isVerified: docData[3] });
         }
         setDocuments(docs);
-      } catch (error) {
-        console.error("Error fetching documents:", error);
-      } finally {
-        setIsLoading(false);
-      }
+      } catch (error) { console.error("Error fetching documents:", error); } finally { setIsLoading(false); }
     }
   }, [contract, account]);
 
@@ -156,26 +155,21 @@ function UserDashboard({ contract, account }) {
       await tx.wait();
       alert("Document added successfully!");
       fetchDocuments();
-    } catch (error) {
-      console.error("Error during upload:", error);
-    } finally {
-      setIsLoading(false);
-      setSelectedFile(null);
-      setDocName("");
-      document.querySelector('input[type="file"]').value = "";
-    }
+    } catch (error) { console.error("Error during upload:", error); } finally { setIsLoading(false); setSelectedFile(null); setDocName(""); document.querySelector('input[type="file"]').value = ""; }
   };
 
   return (
     <div>
+      <h3 className="dashboard-title">My Profile</h3>
+      <p className="dashboard-description">Manage your on-chain portfolio. Upload new documents to create a secure, verifiable record of your achievements.</p>
       <form onSubmit={handleAddDocument}>
-        <h3>Upload a New Document</h3>
-        <div><input type="text" placeholder="Document Name" value={docName} onChange={(e) => setDocName(e.target.value)} required /></div>
+        <h4>Upload a New Document</h4>
+        <div><input type="text" placeholder="Document Name (e.g., 'Bachelor's Degree')" value={docName} onChange={(e) => setDocName(e.target.value)} required /></div>
         <div><input type="file" onChange={handleFileChange} required /></div>
         <button type="submit" disabled={isLoading}>{isLoading ? "Processing..." : "Upload and Add Document"}</button>
       </form>
       <div className="document-list">
-        <h3>Your Documents</h3>
+        <h4>Your On-Chain Documents</h4>
         {isLoading && <p>Loading...</p>}
         {!isLoading && documents.length > 0 ? (
           documents.map((doc, index) => (
@@ -205,10 +199,7 @@ function IssuerDashboard({ contract, isOwner, isAnIssuer }) {
       await tx.wait();
       alert("Issuer added successfully!");
       setNewIssuerAddress("");
-    } catch (error) {
-      console.error("Error adding issuer:", error);
-      alert("Failed to add issuer. Only the contract owner can perform this action.");
-    }
+    } catch (error) { console.error("Error adding issuer:", error); alert("Failed to add issuer. Only the contract owner can perform this action."); }
   };
 
   const handleSearchUser = async (e) => {
@@ -225,11 +216,7 @@ function IssuerDashboard({ contract, isOwner, isAnIssuer }) {
       }
       const unverifiedDocs = allDocs.filter(doc => !doc.isVerified);
       setUserDocsToVerify(unverifiedDocs);
-    } catch (error) {
-      console.error("Error fetching user documents:", error);
-    } finally {
-      setIsLoading(false);
-    }
+    } catch (error) { console.error("Error fetching user documents:", error); } finally { setIsLoading(false); }
   };
 
   const handleVerifyDocument = async (userAddress, docIndex) => {
@@ -238,30 +225,38 @@ function IssuerDashboard({ contract, isOwner, isAnIssuer }) {
       await tx.wait();
       alert(`Document ${docIndex} verified successfully!`);
       handleSearchUser({ preventDefault: () => {} });
-    } catch (error) {
-      console.error("Error verifying document:", error);
-      alert("Failed to verify document. Are you an authorized issuer?");
-    }
+    } catch (error) { console.error("Error verifying document:", error); alert("Failed to verify document. Are you an authorized issuer?"); }
   };
 
   return (
     <div>
-      {isOwner && (
+      {isOwner ? (
+        // If the user IS the owner, ONLY show this Admin section.
         <div className="admin-section">
-          <h3>Admin: Add New Issuer</h3>
-          <form onSubmit={handleAddIssuer}><input type="text" placeholder="New Issuer Address" value={newIssuerAddress} onChange={(e) => setNewIssuerAddress(e.target.value)} required /><button type="submit">Add Issuer</button></form>
+          <h3 className="dashboard-title">Admin Panel</h3>
+          <p className="dashboard-description">As the platform owner, you can grant verification rights to trusted institutions by adding their wallet address below.</p>
+          <form onSubmit={handleAddIssuer}>
+            <input type="text" placeholder="New Issuer Address" value={newIssuerAddress} onChange={(e) => setNewIssuerAddress(e.target.value)} required />
+            <button type="submit">Add Issuer</button>
+          </form>
         </div>
-      )}
-      {isAnIssuer && (
+      ) : isAnIssuer ? (
+        // Otherwise, if the user is an Issuer (but not the owner), show this section.
         <div className="issuer-section">
-          <h3>Verify Student Documents</h3>
-          <form onSubmit={handleSearchUser}><input type="text" placeholder="Student Wallet Address" value={userToVerify} onChange={(e) => setUserToVerify(e.target.value)} required /><button type="submit">Search</button></form>
+          <h3 className="dashboard-title">Issuer Dashboard</h3>
+          <p className="dashboard-description">As a trusted issuer, enter a user's wallet address to see a list of their credentials that are pending your verification.</p>
+          <form onSubmit={handleSearchUser}>
+            <input type="text" placeholder="Student Wallet Address" value={userToVerify} onChange={(e) => setUserToVerify(e.target.value)} required />
+            <button type="submit">Search</button>
+          </form>
           <div className="document-list">
             {isLoading && <p>Searching...</p>}
             {!isLoading && hasSearched && userDocsToVerify.length > 0 && (
               userDocsToVerify.map(doc => (
                 <div key={doc.index} className="document-item">
-                  <p><strong>Name:</strong> {doc.documentName}</p><p><strong>Status:</strong> ⏳ Pending</p><a href={`https://gateway.pinata.cloud/ipfs/${doc.ipfsHash}`} target="_blank" rel="noopener noreferrer">View Document</a>
+                  <p><strong>Name:</strong> {doc.documentName}</p>
+                  <p><strong>Status:</strong> ⏳ Pending</p>
+                  <a href={`https://gateway.pinata.cloud/ipfs/${doc.ipfsHash}`} target="_blank" rel="noopener noreferrer">View Document</a>
                   <button onClick={() => handleVerifyDocument(userToVerify, doc.index)}>Verify</button>
                 </div>
               ))
@@ -269,8 +264,10 @@ function IssuerDashboard({ contract, isOwner, isAnIssuer }) {
             {!isLoading && hasSearched && userDocsToVerify.length === 0 && (<p>No unverified documents to display for this user.</p>)}
           </div>
         </div>
+      ) : (
+        // If the user is neither, show this message.
+        <p>You do not have permission to view this page.</p>
       )}
-      {!isOwner && !isAnIssuer && <p>You do not have permission to view this page.</p>}
     </div>
   );
 }
@@ -297,18 +294,13 @@ function PublicVerifier({ contract }) {
         docs.push({ ipfsHash: docData[0], documentName: docData[1], issuer: docData[2], isVerified: docData[3] });
       }
       setSearchedDocs(docs);
-    } catch (error) {
-      console.error("Error fetching user documents for public view:", error);
-      setSearchedDocs([]);
-    } finally {
-      setIsLoading(false);
-    }
+    } catch (error) { console.error("Error fetching user documents for public view:", error); setSearchedDocs([]); } finally { setIsLoading(false); }
   };
 
   return (
     <div className="public-verifier-section">
       <h3>Public Document Verifier</h3>
-      <p>Enter a user's wallet address to see their credentials.</p>
+      <p className="dashboard-description">Anyone can use this tool to verify the authenticity of a user's credentials. Simply enter the user's public wallet address to view their on-chain portfolio.</p>
       <form onSubmit={handlePublicSearch}>
         <input type="text" placeholder="Enter Wallet Address" value={userToSearch} onChange={(e) => setUserToSearch(e.target.value)} required />
         <button type="submit">Search</button>
@@ -325,7 +317,7 @@ function PublicVerifier({ contract }) {
           ))
         ) : (!isLoading && hasSearched && <p>No documents found for this address.</p>)}
       </div>
-    </div>
+    </div>  
   );
 }
 
