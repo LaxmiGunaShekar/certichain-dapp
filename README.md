@@ -1,70 +1,79 @@
-# Getting Started with Create React App
+# CertiChain - A Decentralized Document Verifier ⛓️
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### "Where there is a chain there is Trust"
 
-## Available Scripts
+A full-stack decentralized application (dApp) that leverages the Ethereum blockchain to create a secure, tamper-proof system for uploading, verifying, and sharing credentials.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🚀 Live Demo & Preview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+![CertiChain Landing Page](./certichain-preview.png)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+*Note: As this is a development project, there is no permanent live demo link. The application can be run locally following the instructions below.*
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## ✨ Key Features
 
-### `npm run build`
+* **Secure Wallet Connection:** Users can securely "log in" and interact with the application using their MetaMask wallet.
+* **Decentralized File Storage:** All documents are uploaded to **IPFS** via the Pinata service, ensuring files are stored permanently and not controlled by a single entity.
+* **On-Chain Document Records:** A record of each document (its IPFS hash) is stored immutably on the blockchain via a custom **Solidity smart contract**.
+* **Role-Based Access Control:**
+    * **Owner:** The contract deployer has exclusive rights to add trusted issuers.
+    * **Issuer:** An authorized address (e.g., a university) that can verify documents.
+* **One-Click Verification:** Approved Issuers can verify credentials with a single, secure transaction.
+* **Public Search:** A public-facing verifier page allows anyone (like a recruiter) to look up a user's wallet address and see their portfolio of verified documents.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🛠️ Tech Stack
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* **Frontend:** React.js, ethers.js, axios
+* **Smart Contract:** Solidity
+* **Blockchain:** Ethereum (Sepolia Testnet)
+* **Decentralized Storage:** IPFS / Pinata
+* **Development Environment:** Remix IDE, Node.js
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## ⚙️ Getting Started
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To get a local copy up and running, follow these simple steps.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Prerequisites
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+* Node.js installed
+* MetaMask browser extension installed
 
-## Learn More
+### Installation
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1.  **Clone the repository:**
+    ```sh
+    git clone [https://github.com/YOUR_USERNAME/certichain-dapp.git](https://github.com/YOUR_USERNAME/certichain-dapp.git)
+    ```
+2.  **Navigate into the project directory:**
+    ```sh
+    cd certichain-dapp
+    ```
+3.  **Install NPM packages:**
+    ```sh
+    npm install
+    ```
+4.  **Set up your environment variables:**
+    * Create a `.env` file in the root of the project.
+    * Add your Pinata API keys to it:
+        ```
+        REACT_APP_PINATA_API_KEY="YOUR_PINATA_API_KEY"
+        REACT_APP_PINATA_API_SECRET="YOUR_PINATA_API_SECRET"
+        ```
+5.  **Update the Smart Contract Address:**
+    * Open `src/App.js`.
+    * Replace the placeholder `contractAddress` with the address of your deployed smart contract on the Sepolia testnet.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+6.  **Run the application:**
+    ```sh
+    npm start
+    ```
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
