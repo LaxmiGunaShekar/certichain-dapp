@@ -18,7 +18,7 @@
   --border-color: #30363d;
   --text-primary: #e6edf3;
   --text-secondary: #8b949e;
-  --glass-bg: rgba(22, 27, 34, 0.6);
+  --glass-bg: rgba(22, 27, 34, 0.7);
   --glass-border: rgba(255, 255, 255, 0.1);
 }
 
@@ -26,6 +26,8 @@ body {
   background-color: var(--background-dark);
   color: var(--text-primary);
   font-family: "Space Grotesk", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .App {
@@ -39,7 +41,7 @@ body {
   align-items: center;
   font-size: calc(10px + 2vmin);
   color: var(--text-primary);
-  padding-top: 20px;
+  padding: 10px;
   box-sizing: border-box;
 }
 
@@ -58,12 +60,14 @@ body {
   min-height: 90vh;
   width: 100%;
   text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
   background: linear-gradient(-45deg, #0d1117, #1e2a38, #0d1117, #381e30);
   background-size: 400% 400%;
   animation: gradient-animation 15s ease infinite;
 }
 .hero-section h1 {
-  font-size: 4.5rem;
+  font-size: 3rem;
   font-weight: 700;
   background: -webkit-linear-gradient(
     45deg,
@@ -73,19 +77,19 @@ body {
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 20px;
-  letter-spacing: -2px;
+  margin-bottom: 15px;
+  letter-spacing: -1px;
 }
 .hero-section .quote {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-style: italic;
   color: var(--text-secondary);
-  margin-bottom: 40px;
-  max-width: 600px;
+  margin-bottom: 30px;
+  max-width: 90%;
 }
 .launch-button {
-  font-size: 1.3rem;
-  padding: 12px 28px;
+  font-size: 1.2rem;
+  padding: 12px 24px;
   background: linear-gradient(
     45deg,
     var(--primary-glow),
@@ -99,6 +103,7 @@ body {
   font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   width: auto;
+  max-width: 300px;
 }
 .launch-button:hover {
   transform: scale(1.05);
@@ -106,16 +111,16 @@ body {
 }
 .info-section {
   width: 90%;
-  max-width: 1100px;
-  margin: 100px 0;
-  padding: 40px;
+  max-width: 1200px;
+  margin: 80px 0;
+  padding: 30px;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: 20px;
   backdrop-filter: blur(15px);
 }
 .info-section h2 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin-bottom: 40px;
   border-bottom: 2px solid var(--primary-glow);
   display: inline-block;
@@ -124,9 +129,9 @@ body {
 .features-grid,
 .how-it-works-grid {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
   gap: 30px;
-  flex-wrap: wrap;
 }
 .feature-card,
 .step-card {
@@ -134,14 +139,14 @@ body {
   padding: 25px;
   border-radius: 15px;
   border: 1px solid var(--border-color);
-  width: 280px;
+  width: auto;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
 }
 .feature-card:hover,
 .step-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
   border-color: var(--primary-glow);
 }
 .feature-card i,
@@ -152,7 +157,7 @@ body {
 }
 .feature-card h3,
 .step-card h3 {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   margin-bottom: 10px;
   color: white;
 }
@@ -160,46 +165,46 @@ body {
   color: var(--primary-glow);
 }
 .footer {
-  margin-top: 80px;
-  padding-top: 40px;
+  margin-top: 60px;
+  padding-top: 30px;
   border-top: 1px solid var(--border-color);
   width: 90%;
   max-width: 1200px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: var(--text-secondary);
 }
 
-/* --- MAIN DAPP STYLES (Refined) --- */
+/* --- MAIN DAPP STYLES (Mobile First) --- */
 .dapp-container {
   width: 100%;
-  max-width: 900px;
+  max-width: 1200px;
   padding: 0 15px;
   box-sizing: border-box;
 }
 .navbar {
   width: 100%;
-  padding: 8px 0;
   background-color: var(--background-light);
   display: flex;
-  justify-content: center;
-  gap: 15px;
+  justify-content: space-around; /* Changed */
   margin-bottom: 20px;
   border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
   z-index: 10;
   backdrop-filter: blur(10px);
+  padding: 5px;
 }
 .navbar button {
   background: transparent;
   color: var(--text-secondary);
   border: none;
-  font-size: 1rem;
+  font-size: 0.8rem;
   cursor: pointer;
-  padding: 8px 18px;
-  border-radius: 8px;
+  padding: 8px 5px; /* Reduced padding */
+  border-radius: 6px;
   transition: color 0.2s ease;
   border-bottom: 2px solid transparent;
+  flex-grow: 1; /* Allow buttons to grow */
 }
 .navbar button:hover,
 .navbar button.active {
@@ -209,10 +214,10 @@ body {
 .connect-wallet-container {
   background: var(--glass-bg);
   backdrop-filter: blur(10px);
-  padding: 40px;
+  padding: 30px;
   border-radius: 15px;
   border: 1px solid var(--glass-border);
-  max-width: 450px;
+  max-width: 90%;
   margin: 40px auto;
 }
 form,
@@ -221,21 +226,21 @@ form,
 .public-verifier-section {
   background: var(--glass-bg);
   backdrop-filter: blur(10px);
-  padding: 25px;
+  padding: 20px;
   border-radius: 15px;
   border: 1px solid var(--glass-border);
   margin: auto;
-  max-width: 550px;
+  max-width: 90%;
 }
 .dashboard-title {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   margin-bottom: 10px;
 }
 .dashboard-description {
   color: var(--text-secondary);
   font-size: 0.9rem;
-  margin: 0 auto 25px;
-  max-width: 500px;
+  margin: 0 auto 20px;
+  max-width: 90%;
   line-height: 1.6;
 }
 input[type="text"] {
@@ -250,9 +255,8 @@ input[type="text"] {
   font-family: "Space Grotesk", sans-serif;
 }
 button {
-  width: auto;
-  min-width: 150px;
-  padding: 12px 25px;
+  width: 100%;
+  padding: 12px;
   border-radius: 8px;
   border: 1px solid var(--primary-glow);
   background-color: var(--button-bg);
@@ -271,7 +275,6 @@ button:hover:not(:disabled) {
 .document-list {
   margin-top: 30px;
   width: 100%;
-  max-width: 550px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -279,17 +282,10 @@ button:hover:not(:disabled) {
   background: var(--background-light);
   border: 1px solid var(--border-color);
   border-radius: 15px;
-  padding: 20px;
+  padding: 15px;
   margin-bottom: 15px;
   text-align: left;
   transition: border-color 0.2s ease;
-}
-.document-item:hover {
-  border-color: var(--primary-glow);
-}
-.document-item p {
-  margin: 5px 0;
-  color: var(--text-primary);
 }
 .document-item a {
   color: var(--primary-glow);
@@ -318,45 +314,59 @@ button:hover:not(:disabled) {
   transform-origin: bottom left;
 }
 
-/* --- RESPONSIVE DESIGN (FOR MOBILE) --- */
-@media (max-width: 768px) {
-  .App-header {
-    padding: 10px;
-  }
+/* --- RESPONSIVE DESIGN FOR TABLETS --- */
+@media (min-width: 768px) {
   .hero-section h1 {
-    font-size: 3.5rem;
-  }
-  .info-section {
-    margin: 60px 0;
-    padding: 25px;
+    font-size: 4rem;
   }
   .features-grid,
   .how-it-works-grid {
-    flex-direction: column;
-  } /* Stack cards vertically */
+    flex-direction: row;
+  }
   .feature-card,
   .step-card {
-    width: auto;
+    width: 200px;
   }
-
-  /* --- NAVIGATION FIX FOR MOBILE --- */
   .navbar {
-    flex-direction: column; /* Stack nav buttons vertically */
-    gap: 10px;
-    padding: 15px;
-  }
+    justify-content: center;
+    gap: 15px;
+  } /* Re-center for tablet */
   .navbar button {
-    width: 100%;
-    text-align: center;
-  }
-
-  .connect-wallet-container {
-    padding: 30px;
+    font-size: 1rem;
+    padding: 10px 20px;
+    flex-grow: 0; /* Stop growing */
   }
   .dashboard-title {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
   .dashboard-description {
-    font-size: 0.9rem;
+    font-size: 1rem;
+  }
+  form,
+  .admin-section,
+  .issuer-section,
+  .public-verifier-section {
+    max-width: 600px;
+  }
+  button {
+    width: auto;
+    min-width: 180px;
+  }
+}
+
+/* --- RESPONSIVE DESIGN FOR DESKTOPS --- */
+@media (min-width: 1024px) {
+  .hero-section h1 {
+    font-size: 5rem;
+  }
+  .info-section {
+    padding: 50px;
+  }
+  .info-section h2 {
+    font-size: 2.8rem;
+  }
+  .feature-card,
+  .step-card {
+    width: 300px;
   }
 }
