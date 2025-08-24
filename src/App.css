@@ -26,8 +26,6 @@ body {
   background-color: var(--background-dark);
   color: var(--text-primary);
   font-family: "Space Grotesk", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 .App {
@@ -60,14 +58,12 @@ body {
   min-height: 90vh;
   width: 100%;
   text-align: center;
-  padding: 20px;
-  box-sizing: border-box;
   background: linear-gradient(-45deg, #0d1117, #1e2a38, #0d1117, #381e30);
   background-size: 400% 400%;
   animation: gradient-animation 15s ease infinite;
 }
 .hero-section h1 {
-  font-size: 3rem;
+  font-size: 5rem;
   font-weight: 700;
   background: -webkit-linear-gradient(
     45deg,
@@ -77,19 +73,19 @@ body {
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 15px;
-  letter-spacing: -1px;
+  margin-bottom: 20px;
+  letter-spacing: -2px;
 }
 .hero-section .quote {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-style: italic;
   color: var(--text-secondary);
-  margin-bottom: 30px;
-  max-width: 90%;
+  margin-bottom: 40px;
+  max-width: 600px;
 }
 .launch-button {
-  font-size: 1.2rem;
-  padding: 12px 24px;
+  font-size: 1.5rem;
+  padding: 15px 30px;
   background: linear-gradient(
     45deg,
     var(--primary-glow),
@@ -102,26 +98,26 @@ body {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
-  width: auto;
-  max-width: 300px;
+  width: auto; /* Change from 25% */
 }
 .launch-button:hover {
   transform: scale(1.05);
   box-shadow: 0 0 30px var(--primary-glow), 0 0 30px var(--secondary-glow);
 }
+
 .info-section {
   width: 90%;
   max-width: 1200px;
-  margin: 80px 0;
-  padding: 30px;
+  margin: 120px 0;
+  padding: 50px;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: 20px;
   backdrop-filter: blur(15px);
 }
 .info-section h2 {
-  font-size: 2rem;
-  margin-bottom: 40px;
+  font-size: 2.8rem;
+  margin-bottom: 50px;
   border-bottom: 2px solid var(--primary-glow);
   display: inline-block;
   padding-bottom: 10px;
@@ -129,205 +125,20 @@ body {
 .features-grid,
 .how-it-works-grid {
   display: flex;
-  flex-direction: column;
   justify-content: space-around;
-  gap: 30px;
+  gap: 40px;
   flex-wrap: wrap;
 }
 .feature-card,
 .step-card {
   background: var(--background-dark);
-  padding: 25px;
+  padding: 30px;
   border-radius: 15px;
   border: 1px solid var(--border-color);
-  width: auto;
+  width: 300px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
 }
 .feature-card:hover,
 .step-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-  border-color: var(--primary-glow);
-}
-.feature-card i,
-.step-card i {
-  font-size: 2.5rem;
-  color: var(--primary-glow);
-  margin-bottom: 15px;
-}
-.feature-card h3,
-.step-card h3 {
-  font-size: 1.3rem;
-  margin-bottom: 10px;
-  color: white;
-}
-.step-card h3 {
-  color: var(--primary-glow);
-}
-.footer {
-  margin-top: 60px;
-  padding-top: 30px;
-  border-top: 1px solid var(--border-color);
-  width: 90%;
-  max-width: 1200px;
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-}
-
-/* --- MAIN DAPP STYLES --- */
-.dapp-container {
-  width: 100%;
-  max-width: 1200px;
-  padding: 0 15px;
-  box-sizing: border-box;
-}
-.navbar {
-  width: 100%;
-  background-color: var(--background-light);
-  display: flex;
-  justify-content: center;
-  gap: 5px;
-  margin-bottom: 30px;
-  border-bottom: 1px solid var(--border-color);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  backdrop-filter: blur(10px);
-  padding: 5px 0;
-}
-.navbar button {
-  background: transparent;
-  color: var(--text-secondary);
-  border: none;
-  font-size: 0.8rem;
-  cursor: pointer;
-  padding: 8px 10px;
-  border-radius: 8px;
-  transition: color 0.2s ease;
-  border-bottom: 2px solid transparent;
-}
-.navbar button:hover,
-.navbar button.active {
-  color: var(--primary-glow);
-  border-bottom: 2px solid var(--primary-glow);
-}
-.connect-wallet-container {
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  padding: 30px;
-  border-radius: 15px;
-  border: 1px solid var(--glass-border);
-  max-width: 90%;
-  margin: 40px auto;
-}
-form,
-.admin-section,
-.issuer-section,
-.public-verifier-section {
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  padding: 20px;
-  border-radius: 15px;
-  border: 1px solid var(--glass-border);
-  margin: auto;
-  max-width: 90%;
-}
-.dashboard-title {
-  font-size: 1.8rem;
-  margin-bottom: 10px;
-}
-.dashboard-description {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  margin: 0 auto 20px;
-  max-width: 90%;
-  line-height: 1.6;
-}
-input[type="text"] {
-  width: calc(100% - 24px);
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  background-color: var(--background-dark);
-  color: var(--text-primary);
-  font-size: 1rem;
-  font-family: "Space Grotesk", sans-serif;
-}
-button {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid var(--primary-glow);
-  background-color: var(--button-bg);
-  color: var(--primary-glow);
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease;
-  margin-top: 15px;
-  font-family: "Space Grotesk", sans-serif;
-}
-button:hover:not(:disabled) {
-  background-color: var(--primary-glow);
-  color: white;
-}
-.document-list {
-  margin-top: 30px;
-  width: 100%;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.document-item {
-  background: var(--background-light);
-  border: 1px solid var(--border-color);
-  border-radius: 15px;
-  padding: 15px;
-  margin-bottom: 15px;
-  text-align: left;
-  transition: border-color 0.2s ease;
-}
-
-/* --- RESPONSIVE DESIGN FOR TABLETS --- */
-@media (min-width: 768px) {
-  .hero-section h1 {
-    font-size: 4rem;
-  }
-  .features-grid,
-  .how-it-works-grid {
-    flex-direction: row;
-  }
-  .feature-card,
-  .step-card {
-    width: 200px;
-  }
-  .navbar button {
-    font-size: 1rem;
-    padding: 10px 20px;
-  }
-  .dashboard-title {
-    font-size: 2rem;
-  }
-  .dashboard-description {
-    font-size: 1rem;
-  }
-}
-
-/* --- RESPONSIVE DESIGN FOR DESKTOPS --- */
-@media (min-width: 1024px) {
-  .hero-section h1 {
-    font-size: 5rem;
-  }
-  .info-section {
-    padding: 50px;
-  }
-  .info-section h2 {
-    font-size: 2.8rem;
-  }
-  .feature-card,
-  .step-card {
-    width: 300px;
-  }
-}
+  transform: translateY(-10px);
