@@ -39,7 +39,7 @@ body {
   align-items: center;
   font-size: calc(10px + 2vmin);
   color: var(--text-primary);
-  padding: 20px;
+  padding-top: 20px;
   box-sizing: border-box;
 }
 
@@ -172,7 +172,7 @@ body {
 /* --- MAIN DAPP STYLES (Refined) --- */
 .dapp-container {
   width: 100%;
-  max-width: 900px; /* Reduced max-width */
+  max-width: 900px;
   padding: 0 15px;
   box-sizing: border-box;
 }
@@ -206,14 +206,13 @@ body {
   color: var(--primary-glow);
   border-bottom: 2px solid var(--primary-glow);
 }
-
 .connect-wallet-container {
   background: var(--glass-bg);
   backdrop-filter: blur(10px);
   padding: 40px;
   border-radius: 15px;
   border: 1px solid var(--glass-border);
-  max-width: 450px; /* Reduced size */
+  max-width: 450px;
   margin: 40px auto;
 }
 form,
@@ -222,19 +221,19 @@ form,
 .public-verifier-section {
   background: var(--glass-bg);
   backdrop-filter: blur(10px);
-  padding: 25px; /* Reduced padding */
+  padding: 25px;
   border-radius: 15px;
   border: 1px solid var(--glass-border);
   margin: auto;
-  max-width: 550px; /* Reduced max-width */
+  max-width: 550px;
 }
 .dashboard-title {
-  font-size: 1.8rem; /* Reduced font size */
+  font-size: 1.8rem;
   margin-bottom: 10px;
 }
 .dashboard-description {
   color: var(--text-secondary);
-  font-size: 0.9rem; /* Reduced font size */
+  font-size: 0.9rem;
   margin: 0 auto 25px;
   max-width: 500px;
   line-height: 1.6;
@@ -251,14 +250,14 @@ input[type="text"] {
   font-family: "Space Grotesk", sans-serif;
 }
 button {
-  width: auto; /* Changed from 100% */
-  min-width: 150px; /* Added min-width */
-  padding: 12px 25px; /* Adjusted padding */
+  width: auto;
+  min-width: 150px;
+  padding: 12px 25px;
   border-radius: 8px;
   border: 1px solid var(--primary-glow);
   background-color: var(--button-bg);
   color: var(--primary-glow);
-  font-size: 1rem; /* Reduced font size */
+  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
@@ -268,10 +267,6 @@ button {
 button:hover:not(:disabled) {
   background-color: var(--primary-glow);
   color: white;
-}
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
 }
 .document-list {
   margin-top: 30px;
@@ -296,11 +291,9 @@ button:disabled {
   margin: 5px 0;
   color: var(--text-primary);
 }
-
-/* --- AESTHETIC LINK STYLES --- */
 .document-item a {
   color: var(--primary-glow);
-  text-decoration: none; /* Removed underline */
+  text-decoration: none;
   font-weight: bold;
   position: relative;
   transition: color 0.3s ease;
@@ -323,4 +316,47 @@ button:disabled {
 .document-item a:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
+}
+
+/* --- RESPONSIVE DESIGN (FOR MOBILE) --- */
+@media (max-width: 768px) {
+  .App-header {
+    padding: 10px;
+  }
+  .hero-section h1 {
+    font-size: 3.5rem;
+  }
+  .info-section {
+    margin: 60px 0;
+    padding: 25px;
+  }
+  .features-grid,
+  .how-it-works-grid {
+    flex-direction: column;
+  } /* Stack cards vertically */
+  .feature-card,
+  .step-card {
+    width: auto;
+  }
+
+  /* --- NAVIGATION FIX FOR MOBILE --- */
+  .navbar {
+    flex-direction: column; /* Stack nav buttons vertically */
+    gap: 10px;
+    padding: 15px;
+  }
+  .navbar button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .connect-wallet-container {
+    padding: 30px;
+  }
+  .dashboard-title {
+    font-size: 1.5rem;
+  }
+  .dashboard-description {
+    font-size: 0.9rem;
+  }
 }
