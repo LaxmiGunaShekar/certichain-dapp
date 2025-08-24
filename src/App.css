@@ -39,7 +39,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 1vmin);
   color: var(--text-primary);
   padding: 10px;
   box-sizing: border-box;
@@ -174,7 +174,7 @@ body {
   color: var(--text-secondary);
 }
 
-/* --- MAIN DAPP STYLES (Mobile First) --- */
+/* --- MAIN DAPP STYLES (Mobile First & Refined) --- */
 .dapp-container {
   width: 100%;
   max-width: 1200px;
@@ -185,7 +185,7 @@ body {
   width: 100%;
   background-color: var(--background-light);
   display: flex;
-  justify-content: space-around; /* Changed */
+  justify-content: space-around;
   margin-bottom: 20px;
   border-bottom: 1px solid var(--border-color);
   position: sticky;
@@ -200,11 +200,11 @@ body {
   border: none;
   font-size: 0.8rem;
   cursor: pointer;
-  padding: 8px 5px; /* Reduced padding */
+  padding: 8px 5px;
   border-radius: 6px;
   transition: color 0.2s ease;
   border-bottom: 2px solid transparent;
-  flex-grow: 1; /* Allow buttons to grow */
+  flex-grow: 1;
 }
 .navbar button:hover,
 .navbar button.active {
@@ -255,8 +255,9 @@ input[type="text"] {
   font-family: "Space Grotesk", sans-serif;
 }
 button {
-  width: 100%;
-  padding: 12px;
+  width: auto;
+  min-width: 150px;
+  padding: 12px 25px;
   border-radius: 8px;
   border: 1px solid var(--primary-glow);
   background-color: var(--button-bg);
@@ -330,11 +331,11 @@ button:hover:not(:disabled) {
   .navbar {
     justify-content: center;
     gap: 15px;
-  } /* Re-center for tablet */
+  }
   .navbar button {
     font-size: 1rem;
     padding: 10px 20px;
-    flex-grow: 0; /* Stop growing */
+    flex-grow: 0;
   }
   .dashboard-title {
     font-size: 2rem;
@@ -346,12 +347,11 @@ button:hover:not(:disabled) {
   .admin-section,
   .issuer-section,
   .public-verifier-section {
-    max-width: 600px;
-  }
-  button {
-    width: auto;
-    min-width: 180px;
-  }
+    max-width: 550px;
+  } /* Reduced from 600px */
+  .document-list {
+    max-width: 550px;
+  } /* Reduced from 600px */
 }
 
 /* --- RESPONSIVE DESIGN FOR DESKTOPS --- */
@@ -369,4 +369,7 @@ button:hover:not(:disabled) {
   .step-card {
     width: 300px;
   }
+  .dapp-container {
+    max-width: 900px;
+  } /* Reduced from 1200px */
 }
