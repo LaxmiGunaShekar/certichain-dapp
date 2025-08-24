@@ -26,8 +26,6 @@ body {
   background-color: var(--background-dark);
   color: var(--text-primary);
   font-family: "Space Grotesk", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 .App {
@@ -41,7 +39,7 @@ body {
   align-items: center;
   font-size: calc(10px + 2vmin);
   color: var(--text-primary);
-  padding-top: 20px;
+  padding: 20px;
   box-sizing: border-box;
 }
 
@@ -60,14 +58,12 @@ body {
   min-height: 90vh;
   width: 100%;
   text-align: center;
-  padding: 20px;
-  box-sizing: border-box;
   background: linear-gradient(-45deg, #0d1117, #1e2a38, #0d1117, #381e30);
   background-size: 400% 400%;
   animation: gradient-animation 15s ease infinite;
 }
 .hero-section h1 {
-  font-size: 3rem;
+  font-size: 4.5rem;
   font-weight: 700;
   background: -webkit-linear-gradient(
     45deg,
@@ -77,19 +73,19 @@ body {
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 15px;
-  letter-spacing: -1px;
+  margin-bottom: 20px;
+  letter-spacing: -2px;
 }
 .hero-section .quote {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-style: italic;
   color: var(--text-secondary);
-  margin-bottom: 30px;
-  max-width: 90%;
+  margin-bottom: 40px;
+  max-width: 600px;
 }
 .launch-button {
-  font-size: 1.2rem;
-  padding: 12px 24px;
+  font-size: 1.3rem;
+  padding: 12px 28px;
   background: linear-gradient(
     45deg,
     var(--primary-glow),
@@ -103,7 +99,6 @@ body {
   font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   width: auto;
-  max-width: 300px;
 }
 .launch-button:hover {
   transform: scale(1.05);
@@ -111,16 +106,16 @@ body {
 }
 .info-section {
   width: 90%;
-  max-width: 1200px;
-  margin: 80px 0;
-  padding: 30px;
+  max-width: 1100px;
+  margin: 100px 0;
+  padding: 40px;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: 20px;
   backdrop-filter: blur(15px);
 }
 .info-section h2 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 40px;
   border-bottom: 2px solid var(--primary-glow);
   display: inline-block;
@@ -129,8 +124,7 @@ body {
 .features-grid,
 .how-it-works-grid {
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   gap: 30px;
   flex-wrap: wrap;
 }
@@ -140,19 +134,16 @@ body {
   padding: 25px;
   border-radius: 15px;
   border: 1px solid var(--border-color);
-  width: auto;
+  width: 280px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
 }
-
-/* --- CORRECTED BLOCK --- */
 .feature-card:hover,
 .step-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(-10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   border-color: var(--primary-glow);
 }
-
 .feature-card i,
 .step-card i {
   font-size: 2.5rem;
@@ -161,7 +152,7 @@ body {
 }
 .feature-card h3,
 .step-card h3 {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   margin-bottom: 10px;
   color: white;
 }
@@ -169,43 +160,43 @@ body {
   color: var(--primary-glow);
 }
 .footer {
-  margin-top: 60px;
-  padding-top: 30px;
+  margin-top: 80px;
+  padding-top: 40px;
   border-top: 1px solid var(--border-color);
   width: 90%;
   max-width: 1200px;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
 }
 
-/* --- MAIN DAPP STYLES --- */
+/* --- MAIN DAPP STYLES (Refined) --- */
 .dapp-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 900px; /* Reduced max-width */
   padding: 0 15px;
   box-sizing: border-box;
 }
 .navbar {
   width: 100%;
+  padding: 8px 0;
   background-color: var(--background-light);
   display: flex;
   justify-content: center;
-  gap: 5px;
-  margin-bottom: 30px;
+  gap: 15px;
+  margin-bottom: 20px;
   border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
   z-index: 10;
   backdrop-filter: blur(10px);
-  padding: 5px 0;
 }
 .navbar button {
   background: transparent;
   color: var(--text-secondary);
   border: none;
-  font-size: 0.8rem;
+  font-size: 1rem;
   cursor: pointer;
-  padding: 8px 10px;
+  padding: 8px 18px;
   border-radius: 8px;
   transition: color 0.2s ease;
   border-bottom: 2px solid transparent;
@@ -215,13 +206,14 @@ body {
   color: var(--primary-glow);
   border-bottom: 2px solid var(--primary-glow);
 }
+
 .connect-wallet-container {
   background: var(--glass-bg);
   backdrop-filter: blur(10px);
-  padding: 30px;
+  padding: 40px;
   border-radius: 15px;
   border: 1px solid var(--glass-border);
-  max-width: 90%;
+  max-width: 450px; /* Reduced size */
   margin: 40px auto;
 }
 form,
@@ -230,21 +222,21 @@ form,
 .public-verifier-section {
   background: var(--glass-bg);
   backdrop-filter: blur(10px);
-  padding: 20px;
+  padding: 25px; /* Reduced padding */
   border-radius: 15px;
   border: 1px solid var(--glass-border);
   margin: auto;
-  max-width: 90%;
+  max-width: 550px; /* Reduced max-width */
 }
 .dashboard-title {
-  font-size: 1.8rem;
+  font-size: 1.8rem; /* Reduced font size */
   margin-bottom: 10px;
 }
 .dashboard-description {
   color: var(--text-secondary);
-  font-size: 0.9rem;
-  margin: 0 auto 20px;
-  max-width: 90%;
+  font-size: 0.9rem; /* Reduced font size */
+  margin: 0 auto 25px;
+  max-width: 500px;
   line-height: 1.6;
 }
 input[type="text"] {
@@ -259,13 +251,14 @@ input[type="text"] {
   font-family: "Space Grotesk", sans-serif;
 }
 button {
-  width: 100%;
-  padding: 12px;
+  width: auto; /* Changed from 100% */
+  min-width: 150px; /* Added min-width */
+  padding: 12px 25px; /* Adjusted padding */
   border-radius: 8px;
   border: 1px solid var(--primary-glow);
   background-color: var(--button-bg);
   color: var(--primary-glow);
-  font-size: 1rem;
+  font-size: 1rem; /* Reduced font size */
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
@@ -276,10 +269,14 @@ button:hover:not(:disabled) {
   background-color: var(--primary-glow);
   color: white;
 }
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 .document-list {
   margin-top: 30px;
   width: 100%;
-  max-width: 600px;
+  max-width: 550px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -287,50 +284,43 @@ button:hover:not(:disabled) {
   background: var(--background-light);
   border: 1px solid var(--border-color);
   border-radius: 15px;
-  padding: 15px;
+  padding: 20px;
   margin-bottom: 15px;
   text-align: left;
   transition: border-color 0.2s ease;
 }
-
-/* --- RESPONSIVE DESIGN FOR TABLETS --- */
-@media (min-width: 768px) {
-  .hero-section h1 {
-    font-size: 4rem;
-  }
-  .features-grid,
-  .how-it-works-grid {
-    flex-direction: row;
-  }
-  .feature-card,
-  .step-card {
-    width: 200px;
-  }
-  .navbar button {
-    font-size: 1rem;
-    padding: 10px 20px;
-  }
-  .dashboard-title {
-    font-size: 2rem;
-  }
-  .dashboard-description {
-    font-size: 1rem;
-  }
+.document-item:hover {
+  border-color: var(--primary-glow);
+}
+.document-item p {
+  margin: 5px 0;
+  color: var(--text-primary);
 }
 
-/* --- RESPONSIVE DESIGN FOR DESKTOPS --- */
-@media (min-width: 1024px) {
-  .hero-section h1 {
-    font-size: 5rem;
-  }
-  .info-section {
-    padding: 50px;
-  }
-  .info-section h2 {
-    font-size: 2.8rem;
-  }
-  .feature-card,
-  .step-card {
-    width: 300px;
-  }
+/* --- AESTHETIC LINK STYLES --- */
+.document-item a {
+  color: var(--primary-glow);
+  text-decoration: none; /* Removed underline */
+  font-weight: bold;
+  position: relative;
+  transition: color 0.3s ease;
+}
+.document-item a::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: var(--secondary-glow);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease-out;
+}
+.document-item a:hover {
+  color: var(--secondary-glow);
+}
+.document-item a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
