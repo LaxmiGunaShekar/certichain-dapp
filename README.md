@@ -10,7 +10,7 @@ A full-stack decentralized application (dApp) that leverages the Ethereum blockc
 
 The live, deployed version of this dApp can be accessed here:
 
-**➡️ [Launch CertiChain Live Demo](certichain-dapp.vercel.app)**
+**➡️ [Launch CertiChain Live Demo](https://certichain-dapp.vercel.app)**
 
 ---
 
