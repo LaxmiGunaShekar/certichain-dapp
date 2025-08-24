@@ -41,7 +41,7 @@ body {
   align-items: center;
   font-size: calc(10px + 2vmin);
   color: var(--text-primary);
-  padding: 10px;
+  padding-top: 20px;
   box-sizing: border-box;
 }
 
