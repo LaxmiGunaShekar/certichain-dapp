@@ -41,62 +41,102 @@ function LandingPage({ onLaunch }) {
 }
 
 //============================================
+// LOGIN PAGE COMPONENT
+//============================================
+function LoginPage({ onConnect }) {
+  return (
+    <div className="connect-wallet-container">
+      <h3 className="dashboard-title">Welcome to CertiChain</h3>
+      <p className="dashboard-description">Please select your role to connect. This is your secure entry point to the world of decentralized identity.</p>
+      <div className="login-options">
+        <button onClick={() => onConnect('user')}>Connect as User</button>
+        <button onClick={() => onConnect('issuer')}>Connect as Issuer / Admin</button>
+        <button onClick={() => onConnect('public')}>Launch Public Verifier</button>
+      </div>
+    </div>
+  );
+}
+
+//============================================
 // MAIN DAPP CONTAINER COMPONENT
 //============================================
 function MainDApp() {
   const [account, setAccount] = useState(null);
   const [contract, setContract] = useState(null);
-  const [view, setView] = useState('user');
+  const [provider, setProvider] = useState(null);
+  const [view, setView] = useState(null);
+  const [balance, setBalance] = useState(null);
   const [isOwner, setIsOwner] = useState(false);
   const [isAnIssuer, setIsAnIssuer] = useState(false);
 
-  const connectWallet = async () => {
+  const connectWallet = async (role) => {
     if (window.ethereum) {
       try {
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        const signer = await provider.getSigner();
+        const providerInstance = new ethers.BrowserProvider(window.ethereum);
+        const signer = await providerInstance.getSigner();
         const userAccount = await signer.getAddress();
         const contractInstance = new ethers.Contract(contractAddress, finalABI, signer);
+        
+        const ownerAddress = await contractInstance.owner();
+        const issuerStatus = await contractInstance.isIssuer(userAccount);
+
+        if (role === 'issuer' && !issuerStatus && userAccount.toLowerCase() !== ownerAddress.toLowerCase()) {
+          alert("Access Denied: Your address is not registered as an Issuer or Admin.");
+          return;
+        }
+
+        setProvider(providerInstance);
         setAccount(userAccount);
         setContract(contractInstance);
+        setIsOwner(userAccount.toLowerCase() === ownerAddress.toLowerCase());
+        setIsAnIssuer(issuerStatus);
+        setView(role);
+
       } catch (error) { console.error("Error connecting wallet:", error); }
     } else { alert("Please install MetaMask."); }
   };
 
+  const disconnectWallet = () => {
+    setAccount(null);
+    setContract(null);
+    setProvider(null);
+    setView(null);
+    setBalance(null);
+    setIsOwner(false);
+    setIsAnIssuer(false);
+    console.log("Disconnected from dApp. For a full logout, disconnect from MetaMask settings.");
+  };
+  
   useEffect(() => {
-    const checkRoles = async () => {
-      if (contract && account) {
-        try {
-          const ownerAddress = await contract.owner();
-          setIsOwner(account.toLowerCase() === ownerAddress.toLowerCase());
-          const issuerStatus = await contract.isIssuer(account);
-          setIsAnIssuer(issuerStatus);
-        } catch (error) { console.error("Error checking roles:", error); }
+    const fetchBalance = async () => {
+      if (account && provider) {
+        const rawBalance = await provider.getBalance(account);
+        const formattedBalance = ethers.formatEther(rawBalance);
+        setBalance(Number(formattedBalance).toFixed(5));
       }
     };
-    checkRoles();
-  }, [account, contract]);
+    fetchBalance();
+  }, [account, provider]);
 
   return (
     <div className="dapp-container">
-      <nav className="navbar">
-        <button className={view === 'user' ? 'active' : ''} onClick={() => setView('user')}>My Profile</button>
-        <button className={view === 'issuer' ? 'active' : ''} onClick={() => setView('issuer')}>Issuer Dashboard</button>
-        <button className={view === 'public' ? 'active' : ''} onClick={() => setView('public')}>Public Verifier</button>
-      </nav>
       {!account ? (
-        <div className="connect-wallet-container">
-          <h3 className="dashboard-title">Welcome to CertiChain</h3>
-          <p className="dashboard-description">Please connect your MetaMask wallet to manage your documents or access issuer tools. This is your secure entry point to the world of decentralized identity.</p>
-          <button onClick={connectWallet}>Connect Wallet</button>
-        </div>
+        <LoginPage onConnect={connectWallet} />
       ) : (
-        <div>
-          <p>Connected: {account.substring(0, 6)}...{account.substring(account.length - 4)}</p>
-          {view === 'user' && <UserDashboard contract={contract} account={account} />}
-          {view === 'issuer' && <IssuerDashboard contract={contract} isOwner={isOwner} isAnIssuer={isAnIssuer} />}
-          {view === 'public' && <PublicVerifier contract={contract} />}
-        </div>
+        <>
+          <nav className="navbar">
+            {view === 'user' && <button className='active'>My Profile</button>}
+            {view === 'issuer' && <button className='active'>Issuer Dashboard</button>}
+            {view === 'public' && <button className='active'>Public Verifier</button>}
+            <button onClick={disconnectWallet} className="disconnect-button">Disconnect</button>
+          </nav>
+          <div>
+            <p>Connected: {account.substring(0, 6)}...{account.substring(account.length - 4)}</p>
+            {view === 'user' && <UserDashboard contract={contract} account={account} balance={balance} />}
+            {view === 'issuer' && <IssuerDashboard contract={contract} isOwner={isOwner} isAnIssuer={isAnIssuer} />}
+            {view === 'public' && <PublicVerifier contract={contract} />}
+          </div>
+        </>
       )}
     </div>
   );
@@ -119,7 +159,7 @@ function App() {
 //============================================
 // USER DASHBOARD COMPONENT
 //============================================
-function UserDashboard({ contract, account }) {
+function UserDashboard({ contract, account, balance }) {
   const [documents, setDocuments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -160,7 +200,10 @@ function UserDashboard({ contract, account }) {
 
   return (
     <div>
-      <h3 className="dashboard-title">My Profile</h3>
+      <div className="profile-header">
+        <h3 className="dashboard-title">My Profile</h3>
+        {balance && <p className="balance-display">Balance: {balance} ETH</p>}
+      </div>
       <p className="dashboard-description">Manage your on-chain portfolio. Upload new documents to create a secure, verifiable record of your achievements.</p>
       <form onSubmit={handleAddDocument}>
         <h4>Upload a New Document</h4>
@@ -231,41 +274,18 @@ function IssuerDashboard({ contract, isOwner, isAnIssuer }) {
   return (
     <div>
       {isOwner ? (
-        // If the user IS the owner, ONLY show this Admin section.
         <div className="admin-section">
           <h3 className="dashboard-title">Admin Panel</h3>
           <p className="dashboard-description">As the platform owner, you can grant verification rights to trusted institutions by adding their wallet address below.</p>
-          <form onSubmit={handleAddIssuer}>
-            <input type="text" placeholder="New Issuer Address" value={newIssuerAddress} onChange={(e) => setNewIssuerAddress(e.target.value)} required />
-            <button type="submit">Add Issuer</button>
-          </form>
+          <form onSubmit={handleAddIssuer}><input type="text" placeholder="New Issuer Address" value={newIssuerAddress} onChange={(e) => setNewIssuerAddress(e.target.value)} required /><button type="submit">Add Issuer</button></form>
         </div>
       ) : isAnIssuer ? (
-        // Otherwise, if the user is an Issuer (but not the owner), show this section.
         <div className="issuer-section">
           <h3 className="dashboard-title">Issuer Dashboard</h3>
           <p className="dashboard-description">As a trusted issuer, enter a user's wallet address to see a list of their credentials that are pending your verification.</p>
-          <form onSubmit={handleSearchUser}>
-            <input type="text" placeholder="Student Wallet Address" value={userToVerify} onChange={(e) => setUserToVerify(e.target.value)} required />
-            <button type="submit">Search</button>
-          </form>
-          <div className="document-list">
-            {isLoading && <p>Searching...</p>}
-            {!isLoading && hasSearched && userDocsToVerify.length > 0 && (
-              userDocsToVerify.map(doc => (
-                <div key={doc.index} className="document-item">
-                  <p><strong>Name:</strong> {doc.documentName}</p>
-                  <p><strong>Status:</strong> ⏳ Pending</p>
-                  <a href={`https://gateway.pinata.cloud/ipfs/${doc.ipfsHash}`} target="_blank" rel="noopener noreferrer">View Document</a>
-                  <button onClick={() => handleVerifyDocument(userToVerify, doc.index)}>Verify</button>
-                </div>
-              ))
-            )}
-            {!isLoading && hasSearched && userDocsToVerify.length === 0 && (<p>No unverified documents to display for this user.</p>)}
-          </div>
+          <form onSubmit={handleSearchUser}><input type="text" placeholder="Student Wallet Address" value={userToVerify} onChange={(e) => setUserToVerify(e.target.value)} required /><button type="submit">Search</button></form><div className="document-list">{isLoading && <p>Searching...</p>}{!isLoading && hasSearched && userDocsToVerify.length > 0 && (userDocsToVerify.map(doc => (<div key={doc.index} className="document-item"><p><strong>Name:</strong> {doc.documentName}</p><p><strong>Status:</strong> ⏳ Pending</p><a href={`https://gateway.pinata.cloud/ipfs/${doc.ipfsHash}`} target="_blank" rel="noopener noreferrer">View Document</a><button onClick={() => handleVerifyDocument(userToVerify, doc.index)}>Verify</button></div>)))}{!isLoading && hasSearched && userDocsToVerify.length === 0 && (<p>No unverified documents to display for this user.</p>)}</div>
         </div>
       ) : (
-        // If the user is neither, show this message.
         <p>You do not have permission to view this page.</p>
       )}
     </div>
@@ -307,7 +327,7 @@ function PublicVerifier({ contract }) {
       </form>
       <div className="document-list">
         {isLoading && <p>Searching...</p>}
-        {!isLoading && hasSearched && searchedDocs.length > 0 ? (
+        {!isLoading && searchedDocs.length > 0 ? (
           searchedDocs.map((doc, index) => (
             <div key={index} className="document-item">
               <p><strong>Name:</strong> {doc.documentName}</p>
